@@ -1,7 +1,14 @@
 .env
 .idea
+.vscode
+.sass-cache
+node_modules
 
 *.pyc
 __pycache__/*
 
 *.sqlite3
+
+app.js
+style.css
+style.css.min

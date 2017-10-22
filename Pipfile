@@ -1,16 +1,21 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [dev-packages]
+
+
 
 [packages]
 
 django = "*"
-"django-rest-framework" = "*"
+django-rest-framework = "*"
 djoser = "*"
 
 
 [requires]
+
 python_version = "3.6"

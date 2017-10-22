@@ -1,0 +1,34 @@
+{
+  "name": "bus-travel-discounts",
+  "version": "1.0.0",
+  "description": "Bus discounts site frontend",
+  "main": "src/spa_app/src/main.js",
+  "dependencies": {
+    "bulma": "^0.6.0",
+    "mithril": "^1.1.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "node-sass": "^4.5.3",
+    "standard": "^10.0.3",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "start": "webpack -d --progress --colors --watch",
+    "build": "webpack -p --progress --colors",
+    "styles": "sass src/spa_app/src/style.sass src/spa_app/static/spa_app/style.css",
+    "format": "standard --fix ./src/spa_app/src/**/*.js"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "env"
+    ]
+  },
+  "author": "iamthelaw",
+  "repository": "https://github.com/Iamthelaw/bus-travel-discounts",
+  "license": "MIT"
+}
