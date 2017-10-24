@@ -12,3 +12,4 @@ __pycache__/*
 app.js
 style.css
 style.css.min
+style.css.map
