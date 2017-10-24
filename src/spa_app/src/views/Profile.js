@@ -2,7 +2,7 @@ const m = require('mithril')
 
 const City = require('./../models/City')
 const Checkbox = require('./../components/Form/Checkbox')
-const Page = require('./../components/Page')
+const Page = require('./../components/Page/Full')
 
 module.exports = {
   oninit: City.loadList,

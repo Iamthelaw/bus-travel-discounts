@@ -1,7 +1,7 @@
 const m = require('mithril')
 
 const DealList = require('./../components/DealList')
-const Page = require('./../components/Page')
+const Page = require('./../components/Page/Full')
 
 module.exports = {
   view () {
