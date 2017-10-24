@@ -34,10 +34,7 @@ const LoginForm = {
           text: 'Login',
           disabled: !Auth.canSubmit()
         }),
-        m(Button, {
-          text: 'Cancel',
-          onclick: Modal.hide
-        })
+        m('a.button[href=/]', {oncreate: m.route.link}, 'Cancel')
       ])
     ])
   }

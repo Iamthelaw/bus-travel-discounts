@@ -1,7 +1,7 @@
 const m = require('mithril')
 
-const Header = require('./Header')
-const Footer = require('./Footer')
+const Header = require('./../Header')
+const Footer = require('./../Footer')
 
 module.exports = {
   view (vnode) {
