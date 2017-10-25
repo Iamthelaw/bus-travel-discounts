@@ -1,5 +1,4 @@
 const m = require('mithril')
-const Modal = require('./../Modal')
 
 const Top = {
   visible: false,
