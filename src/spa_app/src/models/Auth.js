@@ -49,7 +49,7 @@ const Auth = {
       Auth.user.name = data.username
       Auth.user.id = data.id
       Auth.user.registered = true
-      m.route.set('/app')
+      m.route.set('/thank-you')
     })
     .catch((error) => {
       Auth.errors = JSON.parse(error.message)

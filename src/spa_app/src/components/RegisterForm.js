@@ -43,7 +43,7 @@ const LoginForm = {
           text: 'Register',
           disabled: !Auth.canSubmit()
         }),
-        m('a.button[href=/]', {oncreate: m.route.link})
+        m('a.button[href=/]', {oncreate: m.route.link}, 'Cancel')
       ])
     ])
   }
