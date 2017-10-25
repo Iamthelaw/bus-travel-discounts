@@ -8,7 +8,9 @@ const Top = {
     return m('nav.navbar.is-primary', [
       m('ul.container', [
         m('li.navbar-brand', [
-          m('a.navbar-item', {href: '#!/app'}, [m('img', {src: '/static/spa_app/logo.svg', width: 50})]),
+          m('a.navbar-item[href=/]', {oncreate: m.route.link}, [
+            m('img', {src: '/static/spa_app/logo.svg', width: 50})
+          ]),
           m('span.navbar-burger.burger', {
             onclick: Top.toggleMenu
           }, [m('span'), m('span'), m('span')])

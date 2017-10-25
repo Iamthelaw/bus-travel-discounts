@@ -2,7 +2,6 @@ const m = require('mithril')
 const Auth = require('../models/Auth')
 const TextInput = require('./Form/TextInput')
 const Button = require('./Form/Button')
-const Modal = require('./Modal')
 
 const LoginForm = {
   oninit: Auth.getCSRFToken,
@@ -44,10 +43,7 @@ const LoginForm = {
           text: 'Register',
           disabled: !Auth.canSubmit()
         }),
-        m(Button, {
-          text: 'Cancel',
-          onclick: Modal.hide
-        })
+        m('a.button[href=/]', {oncreate: m.route.link})
       ])
     ])
   }
