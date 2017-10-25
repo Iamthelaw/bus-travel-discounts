@@ -10,9 +10,8 @@ module.exports = {
         m('br'),
         'Have an account? ',
         m('a.has-text-weight-bold[href=/login]', {oncreate: m.route.link}, 'Log in'),
-        '.',
-        ]
-      )
+        '.'
+      ])
     ])
   }
 }

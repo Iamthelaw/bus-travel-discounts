@@ -1,5 +1,4 @@
 const m = require('mithril')
-const LoginForm = require('./LoginForm')
 const TopNav = require('./Nav/Top')
 const TabNav = require('./Nav/Tab')
 const Hero = require('./Hero')

@@ -1,4 +1,5 @@
 const m = require('mithril')
+const Logo = require('./../Logo')
 
 const Top = {
   visible: false,
@@ -7,9 +8,7 @@ const Top = {
     return m('nav.navbar.is-primary', [
       m('ul.container', [
         m('li.navbar-brand', [
-          m('a.navbar-item[href=/]', {oncreate: m.route.link}, [
-            m('img', {src: '/static/spa_app/logo.svg', width: 50})
-          ]),
+          m(Logo, {class: 'navbar-item'}),
           m('span.navbar-burger.burger', {
             onclick: Top.toggleMenu
           }, [m('span'), m('span'), m('span')])

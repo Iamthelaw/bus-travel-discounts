@@ -23,7 +23,7 @@ const LoginForm = {
       m(TextInput, {
         label: 'Username',
         type: 'text',
-        placeholder: 'John Doe',
+        placeholder: 'johndoe2',
         oninput: m.withAttr('value', Auth.setUsername),
         value: Auth.username,
         errors: Auth.errors && Auth.errors.username
