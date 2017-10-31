@@ -9,6 +9,7 @@ module.exports = {
             name: vnode.attrs.name,
             type: 'checkbox'
           }),
+          ' ',
           vnode.attrs.label
         ])
       ])
