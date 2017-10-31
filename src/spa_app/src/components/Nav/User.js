@@ -17,7 +17,7 @@ module.exports = {
     } else {
       return [
         m('a.navbar-item[href=/login]', {oncreate: m.route.link}, 'Log in'),
-        m('a.navbar-item.button[href=/register]', {oncreate: m.route.link}, 'Join')
+        m('a.navbar-item[href=/register]', {oncreate: m.route.link}, 'Join')
       ]
     }
   }
