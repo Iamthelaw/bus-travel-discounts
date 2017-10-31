@@ -1,4 +1,5 @@
 const m = require('mithril')
+const Cookies = require('js-cookie')
 
 const Auth = {
   username: '',
