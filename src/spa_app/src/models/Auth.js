@@ -34,6 +34,7 @@ const Auth = {
     loggedIn: false
   },
   errors: {},
+
   register () {
     m.request({
       method: 'POST',
@@ -50,12 +51,12 @@ const Auth = {
       Auth.user.name = data.username
       Auth.user.id = data.id
       Auth.user.registered = true
-      m.route.set('/thank-you')
     })
     .catch((error) => {
       Auth.errors = JSON.parse(error.message)
     })
   },
+
   login () {
     m.request({
       method: 'POST',
@@ -68,7 +69,46 @@ const Auth = {
       headers: {'X-CSRFToken': Auth.CSRFToken}
     })
     .then((data) => {
-      console.log(data)
+      Auth.user.loggedIn = true
+      Cookies.set('sessiontoken', data.auth_token)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  },
+
+  logout () {
+    let sessionToken = Cookies.get('sessiontoken')
+    m.request({
+      method: 'POST',
+      url: '/auth/token/destroy/',
+      headers: {'Authorization': `Token ${sessionToken}`}
+    })
+    .then((data) => {
+      Cookies.remove('sessiontoken')
+      Auth.user.loggedIn = false
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  },
+
+  check () {
+    let sessionToken = Cookies.get('sessiontoken')
+    m.request({
+      method: 'GET',
+      url: '/auth/me/',
+      headers: {'Authorization': `Token ${sessionToken}`}
+    })
+    .then((data) => {
+      Auth.user.name = data.username
+      Auth.user.email = data.email
+      Auth.user.id = data.id
+      Auth.user.loggedIn = true
+    })
+    .catch((error) => {
+      Auth.user.loggedIn = false
+      console.error(error)
     })
   }
 }

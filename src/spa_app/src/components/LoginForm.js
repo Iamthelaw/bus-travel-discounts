@@ -10,6 +10,10 @@ const LoginForm = {
       onsubmit (e) {
         e.preventDefault()
         Auth.login()
+        if (Auth.user.loggedIn) {
+          Auth.check()
+          m.route.set('/')
+        }
       }
     }, [
       m(TextInput, {

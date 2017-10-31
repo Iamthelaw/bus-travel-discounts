@@ -10,6 +10,7 @@ const LoginForm = {
       onsubmit (e) {
         e.preventDefault()
         Auth.register()
+        m.route.set('/thank-you')
       }
     }, [
       m(TextInput, {
