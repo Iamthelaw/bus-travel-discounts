@@ -10,18 +10,20 @@ const Auth = require('./models/Auth')
 
 const root = document.querySelector('app')
 
-m.route(root, '/app', {
-  '/app': Index,
-  '/login': Login,
-  '/register': Register,
-  '/thank-you': ThankYou,
-  '/profile': {
-    onmatch () {
-      if (!Auth.user.loggedIn) {
-        m.route.set('/login')
-      } else {
-        return Profile
-      }
+const validate = (condition, redirect, success) => ({
+  onmatch () {
+    if (condition) {
+      m.route.set(redirect)
+    } else {
+      return success
     }
   }
+})
+
+m.route(root, '/app', {
+  '/app': Index,
+  '/thank-you': ThankYou,
+  '/login': validate(Auth.user.loggedIn, '/app', Login),
+  '/register': validate(Auth.user.loggedIn, '/app', Register),
+  '/profile': validate(!Auth.user.loggedIn, '/login', Profile)
 })
