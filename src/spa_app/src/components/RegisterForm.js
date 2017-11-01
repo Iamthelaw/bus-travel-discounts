@@ -1,7 +1,11 @@
 const m = require('mithril')
+
 const Auth = require('../models/Auth')
-const TextInput = require('./Form/TextInput')
-const Button = require('./Form/Button')
+
+const Username = require('./Form/Field/Username')
+const Password = require('./Form/Field/Password')
+const Email = require('./Form/Field/Email')
+const ActionButtonGroup = require('./Form/ActionButtonGroup')
 
 const LoginForm = {
   oninit: Auth.getCSRFToken,
@@ -13,39 +17,10 @@ const LoginForm = {
         m.route.set('/thank-you')
       }
     }, [
-      m(TextInput, {
-        label: 'Email',
-        type: 'email',
-        placeholder: 'love2travel@gmail.com',
-        oninput: m.withAttr('value', Auth.setEmail),
-        value: Auth.email,
-        errors: Auth.errors && Auth.errors.email
-      }),
-      m(TextInput, {
-        label: 'Username',
-        type: 'text',
-        placeholder: 'johndoe2',
-        oninput: m.withAttr('value', Auth.setUsername),
-        value: Auth.username,
-        errors: Auth.errors && Auth.errors.username
-      }),
-      m(TextInput, {
-        label: 'Password',
-        type: 'password',
-        placeholder: '******',
-        oninput: m.withAttr('value', Auth.setPassword),
-        value: Auth.password,
-        errors: Auth.errors && Auth.errors.password
-      }),
-      m('.field.is-grouped', [
-        m(Button, {
-          submit: true,
-          primary: true,
-          text: 'Register',
-          disabled: !Auth.canSubmit()
-        }),
-        m('a.button[href=/]', {oncreate: m.route.link}, 'Cancel')
-      ])
+      m(Email),
+      m(Username),
+      m(Password),
+      m(ActionButtonGroup, {text: 'Register', disabled: !Auth.canSubmit()})
     ])
   }
 }
