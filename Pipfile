@@ -7,13 +7,20 @@ name = "pypi"
 
 [dev-packages]
 
+pytest = "*"
+pytest-cov = "*"
+pytest-django = "*"
+pylint = "*"
+pylint-django = "*"
 
 
 [packages]
 
-django = "*"
+Django = "*"
 django-rest-framework = "*"
 djoser = "*"
+"beautifulsoup4" = "*"
+requests = "*"
 
 
 [requires]
