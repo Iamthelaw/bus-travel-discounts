@@ -1,4 +1,4 @@
-# encoding=utf-8
+"""Url declaration."""
 from django.conf.urls import url
 
 from spa_app.views import index
