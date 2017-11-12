@@ -2,6 +2,8 @@
 .idea
 .vscode
 .sass-cache
+.cache
+.coverage
 node_modules
 
 *.pyc
