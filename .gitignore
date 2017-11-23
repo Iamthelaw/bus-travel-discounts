@@ -5,6 +5,7 @@
 .cache
 .coverage
 node_modules
+build
 
 *.pyc
 __pycache__/*

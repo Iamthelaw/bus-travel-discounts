@@ -12,11 +12,13 @@ pytest-cov = "*"
 pytest-django = "*"
 pylint = "*"
 pylint-django = "*"
+ipython = "*"
+sphinx = "*"
 
 
 [packages]
 
-Django = "*"
+django = "*"
 django-rest-framework = "*"
 djoser = "*"
 "beautifulsoup4" = "*"
