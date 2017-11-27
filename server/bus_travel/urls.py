@@ -17,9 +17,10 @@ urlpatterns = [
     url(r'^%s/' % os.environ.get('ADMIN_URL', 'admin'), admin.site.urls),
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
-    url(r'^api/v1/discount/', include('discount.urls')),
+    # url(r'^api/v1/', include('discount.urls')),
+    url(r'^api/v1/', include('geo_data.urls')),
     # All other urls go to SPA app
-    url(r'', IndexView.as_view()),
+    # url(r'', IndexView.as_view()),
 ]
 
 if settings.DEBUG:
