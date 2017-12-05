@@ -1,5 +1,6 @@
 """
-WSGI config for ecolinesdiscounts project.
+WSGI
+====
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

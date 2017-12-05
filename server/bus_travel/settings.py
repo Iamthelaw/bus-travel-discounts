@@ -1,5 +1,10 @@
-# encoding: utf-8
-"""Django settings for ecolines discounts project."""
+"""
+Settings
+========
+Module contains settings for this projects.
+
+I try to keep this module as simple and minimal as possible
+"""
 
 import os
 
@@ -7,6 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+#: Indicates if this project is running in developer mode
 DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = []
@@ -104,11 +110,14 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = 'en-us'
 
+#: This setting allows clean urls for static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'bus_travel', 'static'),
-    # Path to flags svg files
+    # This is needed to serve svg icons for flags-css
     os.path.join(BASE_DIR, '..', 'node_modules', 'flag-icon-css', 'flags')
 )
+#: This tells Django that all static files should be awailable from
+#: /static/ url
 STATIC_URL = '/static/'
 
 LOGGING = {
@@ -151,8 +160,10 @@ LOGGING = {
     },
 }
 
-# Service settings
-
+#: Custom setting object for storing access to Mapzen api serivce.
+#: Mainly I use this api service as fallback alternative to Opencage
+#: service, so when Opencage fails I can try get info from this guy.
+# TODO: Need to cleanup this part, to not duplicate yourself
 MAPZEN_API = {
     'name': 'Mapzen',
     'url': 'https://search.mapzen.com/v1/search/structured',
@@ -162,7 +173,9 @@ MAPZEN_API = {
     'api_keyword': 'api_key',
     'extra': {},
 }
-
+#: Custom setting object for storing access to Opencage api serivce.
+#: Important part here is ``extra`` object containing geo bounds
+#: that allow forward geo seraching be more fast and specific
 OPENCAGE_API = {
     'name': 'OpenCage',
     'url': 'https://api.opencagedata.com/geocode/v1/json',

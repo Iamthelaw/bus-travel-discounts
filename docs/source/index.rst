@@ -17,6 +17,7 @@ Welcome to Bus Travel's documentation!
    :maxdepth: 2
    :caption: Apps:
 
+   apps/root
    apps/discount
    apps/geo_data
 
