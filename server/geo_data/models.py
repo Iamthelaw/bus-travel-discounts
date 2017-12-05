@@ -24,7 +24,8 @@ class Country(models.Model):
 class City(models.Model):
     """City model."""
     name = models.CharField(max_length=250, unique=True)
-    country = models.ForeignKey(Country, related_name='cities')
+    country = models.ForeignKey(
+        Country, related_name='cities', on_delete=models.CASCADE)
     latitude = models.CharField(max_length=100, null=True, blank=True)
     longitude = models.CharField(max_length=100, null=True, blank=True)
 
@@ -48,7 +49,8 @@ class City(models.Model):
 class Variant(models.Model):
     """Special model for different names of one city."""
     name = models.CharField(max_length=250)
-    city = models.ForeignKey(City, related_name='variants')
+    city = models.ForeignKey(
+        City, related_name='variants', on_delete=models.CASCADE)
 
     #: Used to set city name to one of variants
     is_main = models.BooleanField(default=False)

@@ -7,12 +7,15 @@ from money.models import Currency
 
 class Discount(models.Model):
     """Discount implementation."""
-    from_city = models.ForeignKey(City, related_name='discount_from_city')
-    to_city = models.ForeignKey(City, related_name='discount_to_city')
+    from_city = models.ForeignKey(
+        City, related_name='discount_from_city', on_delete=models.CASCADE)
+    to_city = models.ForeignKey(
+        City, related_name='discount_to_city', on_delete=models.CASCADE)
 
     original_price = models.DecimalField(
         default=0.00, decimal_places=2, max_digits=8)
-    original_currency = models.ForeignKey(Currency)
+    original_currency = models.ForeignKey(
+        Currency, on_delete=models.CASCADE)
 
     time_start = models.DateField(null=True, blank=True)
     time_end = models.DateField(null=True, blank=True)

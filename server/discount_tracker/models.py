@@ -16,8 +16,10 @@ class BaseTracker(models.Model):
 
 class CityTracker(BaseTracker):
     """Tracker specific to city relations."""
-    from_city = models.ForeignKey(City, related_name='tracker_from_city')
-    to_city = models.ForeignKey(City, related_name='tracker_to_city')
+    from_city = models.ForeignKey(
+        City, related_name='tracker_from_city', on_delete=models.CASCADE)
+    to_city = models.ForeignKey(
+        City, related_name='tracker_to_city', on_delete=models.CASCADE)
 
 
 class CountryTracker(BaseTracker):
@@ -27,5 +29,6 @@ class CountryTracker(BaseTracker):
         (10, 'to'),
         (20, 'all'),
     )
-    country = models.ForeignKey(Country)
+    country = models.ForeignKey(
+        Country, on_delete=models.CASCADE)
     direction = models.PositiveSmallIntegerField(choices=DIRECTION_CHOICES)
