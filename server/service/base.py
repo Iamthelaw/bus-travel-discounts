@@ -36,7 +36,8 @@ class Service:
         else:
             logger.debug(api_response.content)
             raise ServiceUnavailable(
-                '%s service return <%d>' % (self.name, api_response.status_code)
+                '%s service return <%d>' % (
+                    self.name, api_response.status_code)
             )
 
     @staticmethod
@@ -62,6 +63,7 @@ class Service:
 
 class Response:
     """Abstract external api response class."""
+
     def __init__(self, raw_data):
         self.raw_data = raw_data
 
