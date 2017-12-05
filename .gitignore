@@ -4,6 +4,8 @@
 .sass-cache
 .cache
 .coverage
+*.sublime-workspace
+*.sublime-project
 node_modules
 build
 
