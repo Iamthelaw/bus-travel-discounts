@@ -1,6 +1,6 @@
 """
-Root package of this project
-****************************
+Root package
+************
 
 Contains the most important parts.
 
@@ -34,10 +34,8 @@ for SPA application
 Management commands
 ===================
 
-This is usefull django scripts that can be run periodically. For example
-to clean up database from inactive records.
+This is usefull django scripts that can be run periodically.
 
-1. ``$ django-admin cleanup`` custom command for cleaning up database from
-    old discounts that no longer available. I plan to run it once a week
-    as this project goes live.
+.. automodule:: bus_travel.management.commands.cleanup
+    :members:
 """

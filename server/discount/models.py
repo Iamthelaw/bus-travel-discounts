@@ -1,4 +1,7 @@
-"""Model classes for discounts app."""
+"""
+Data models
+===========
+"""
 from django.db import models
 
 from geo_data.models import City
@@ -6,7 +9,7 @@ from money.models import Currency
 
 
 class Discount(models.Model):
-    """Discount implementation."""
+    """Container for storing discounts."""
     from_city = models.ForeignKey(
         City, related_name='discount_from_city', on_delete=models.CASCADE)
     to_city = models.ForeignKey(
@@ -20,27 +23,27 @@ class Discount(models.Model):
     time_start = models.DateField(null=True, blank=True)
     time_end = models.DateField(null=True, blank=True)
 
-    #: Who knows how long can be url string?
+    #: Using text field, because who knows how long can be url string?
     link = models.TextField(blank=True)
 
     #: What parser created this record
     parser = models.CharField(max_length=200, default='UnknownParser')
 
-    #: See management command to clean-up database
+    #: See management command that using this field to clean-up database
     is_active = models.BooleanField(default=True)
 
     @property
     def from_country_code(self):
-        """Code for beginning country."""
+        """Beginning country international code."""
         return self.from_city.country.code
 
     @property
     def to_country_code(self):
-        """Code for destination country."""
+        """Destination country international code."""
         return self.to_city.country.code
 
     def price(self):
-        """Formatted original price."""
+        """Formatted price as 10$."""
         return '{} {}'.format(self.original_price, self.original_currency.code)
 
     def __str__(self):

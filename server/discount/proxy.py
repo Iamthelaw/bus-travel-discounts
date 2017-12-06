@@ -1,4 +1,7 @@
-"""Proxy class for handling Discounts."""
+"""
+Proxy classes
+=============
+"""
 from discount.models import Discount
 
 

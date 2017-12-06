@@ -1,4 +1,16 @@
-"""Command for removing garbage from database."""
+"""
+Command for cleaning up database
+---------------------------------------
+
+Clean database from old discounts that no longer available.
+I plan to run it once a week as this project goes live.
+
+Run command:
+
+.. code-block:: console
+
+    $ django-admin cleanup
+"""
 from django.core.management.base import BaseCommand
 
 from discount.models import Discount
@@ -10,7 +22,7 @@ class Command(BaseCommand):
     help = 'Remove garbage from database'
 
     def handle(self, *args, **options):
-        """Remove garbage."""
+        """Removes garbage."""
         # Remove discounts that no longer active
         Discount.objects.filter(is_active=False).delete()
         # Remove Countries without cities
