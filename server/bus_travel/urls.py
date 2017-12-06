@@ -14,14 +14,14 @@ enviroment variable so my project is more secure for outside world.
 """
 import os
 
-from django.conf.urls import url, include
+from django.urls import include, path
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
 
 #: Hardcoded base api endpoint, maybe I should move it to project settings?
-API_URL = r'^api/v1/'
+API_URL = 'api/v1/'
 
 
 class IndexView(TemplateView):
@@ -34,16 +34,16 @@ class IndexView(TemplateView):
 
 
 urlpatterns = [
-    url(r'^%s/' % os.environ.get('ADMIN_URL', 'admin'), admin.site.urls),
+    path(os.environ.get('ADMIN_URL', 'admin') + '/', admin.site.urls),
 
-    url(r'^auth/', include('djoser.urls')),
-    url(r'^auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 
-    url(API_URL, include('discount.urls')),
-    url(API_URL, include('geo_data.urls')),
+    path(API_URL, include('discount.urls')),
+    path(API_URL, include('geo_data.urls')),
 
     # All other urls go to SPA app
-    url(r'', IndexView.as_view()),
+    path('', IndexView.as_view()),
 ]
 
 if settings.DEBUG:
