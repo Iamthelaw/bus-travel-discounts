@@ -2,8 +2,10 @@
 Discounts
 *********
 
-This app is responsible for any activity related to discounts - store
-it, create new, update, e.t.c
+**Discount** here is some sale deal on bus tickets. Logicaly Discount is
+contained for city from where you want to go, destination city,
+a price for a ticket, currency in which this price is set and time range
+in which this deal is valid.
 
 .. automodule:: discount.models
     :members:
