@@ -54,4 +54,3 @@ class FullCountrySerializer(SimpleCountrySerializer):
     class Meta:
         model = Country
         fields = ('name', 'code', 'cities')
-

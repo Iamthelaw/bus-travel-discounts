@@ -7,6 +7,7 @@ from discount.models import Discount
 
 class DiscountProxy(object):
     """Proxy class for getting discount instances."""
+
     def __init__(self, kwargs):
         self.fields_for_update = (
             'original_price',
@@ -51,6 +52,6 @@ class DiscountProxy(object):
         """Get new or updated discount instance."""
         if not self.have_required_fields():
             raise ValueError(
-                'Required fields: {}'.format(', '.join(self.fields_for_filter))
+                f'Required fields: {", ".join(self.fields_for_filter)}'
             )
         return self.updated

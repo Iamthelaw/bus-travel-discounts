@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 class CityProxy(object):
     """City creation logic."""
+
     def __init__(self, city_name):
         self.city_name = sanitize(city_name)
         self.opencage = OpenCageService
@@ -54,9 +55,9 @@ class CityProxy(object):
             variant = Variant.objects.get(name=self.city_name)
         except Variant.DoesNotExist:
             logger.info(
-                'Unable to find city "%s", creating...' % self.city_name)
+                f'Unable to find city "{self.city_name}", creating...'
+            )
             return self.create()
         else:
-            logger.debug(
-                'Found existing city "%s"' % self.city_name)
+            logger.debug(f'Found existing city "{self.city_name}"')
             return variant.city
