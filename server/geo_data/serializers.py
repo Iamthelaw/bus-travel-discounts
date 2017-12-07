@@ -12,6 +12,7 @@ class SimpleCountrySerializer(serializers.ModelSerializer):
         many=True, read_only=True, slug_field='name')
 
     class Meta:
+        """Serializer meta class."""
         model = Country
         fields = ('name', 'code', 'cities')
 
@@ -21,6 +22,7 @@ class SimpleCitySerializer(serializers.ModelSerializer):
     country = SimpleCountrySerializer()
 
     class Meta:
+        """Serializer meta class."""
         model = City
         fields = ('name', 'country', 'latitude', 'longitude')
 
@@ -29,7 +31,8 @@ class FullCitySerializer(SimpleCitySerializer):
     """City information plus discounts related to city."""
     discounts = fields.SerializerMethodField()
 
-    def get_discounts(self, city):
+    @staticmethod
+    def get_discounts(city):
         """Returns all discounts related to city."""
         return {
             'from_city': DiscountSerializer(
@@ -39,6 +42,7 @@ class FullCitySerializer(SimpleCitySerializer):
         }
 
     class Meta:
+        """Serializer meta class."""
         model = City
         fields = ('name', 'latitude', 'longitude', 'discounts')
 
@@ -47,10 +51,12 @@ class FullCountrySerializer(SimpleCountrySerializer):
     """General information about country."""
     cities = fields.SerializerMethodField()
 
-    def get_cities(self, country):
+    @staticmethod
+    def get_cities(country):
         """Returns all cities discounts for country."""
         return FullCitySerializer(country.cities.all(), many=True).data
 
     class Meta:
+        """Serializer meta class."""
         model = Country
         fields = ('name', 'code', 'cities')

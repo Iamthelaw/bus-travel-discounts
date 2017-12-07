@@ -11,7 +11,7 @@ from rest_framework.response import Response
 
 
 # TODO This part needs another design decision!
-def instance_view(model_serializer, query_by='name'):
+def instance_view(model_serializer):
     """
     Generic instance details view.
     Basicly only GET responses with data if it is exists, if not - 404

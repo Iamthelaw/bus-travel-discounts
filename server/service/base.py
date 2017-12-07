@@ -70,7 +70,7 @@ class Response:
     @staticmethod
     def parse(data):
         """Parse input data to desired format."""
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def data(self):
@@ -80,4 +80,4 @@ class Response:
     @property
     def is_empty(self):
         """Returns is this response is empty."""
-        raise NotImplemented
+        raise NotImplementedError

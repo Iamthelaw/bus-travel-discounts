@@ -49,10 +49,10 @@ class OpenCageResponse(Response):
                 'latitude': coord.latitude,
                 'longitude': coord.longitude,
             }
-        except KeyError as e:
+        except KeyError as exception:
             print(data)
             logger.debug(data)
-            logger.exception(e)
+            logger.exception(exception)
 
     @property
     def is_empty(self):

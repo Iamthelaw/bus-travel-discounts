@@ -42,8 +42,7 @@ def kwargs(city, currency):
 @pytest.mark.django_db
 def test_valid_kwargs(kwargs):
     """Just test that with valid input all works as expected."""
-    proxy = DiscountProxy(kwargs)
-    discount = proxy.get()
+    DiscountProxy(kwargs).get()
     assert Discount.objects.count() == 1
 
 
@@ -53,13 +52,11 @@ def test_update_process(kwargs):
 
     # Creating first instance
     evil_empire = 'http://yandex.ru'
-    proxy = DiscountProxy(kwargs)
-    discount = proxy.get()
+    DiscountProxy(kwargs).get()
 
     # Getting instance again
     kwargs.update(link=evil_empire, original_price=100)
-    proxy = DiscountProxy(kwargs)
-    discount = proxy.get()
+    DiscountProxy(kwargs).get()
 
     # No new instances created
     assert Discount.objects.count() == 1

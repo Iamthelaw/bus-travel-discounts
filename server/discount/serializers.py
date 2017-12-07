@@ -39,6 +39,7 @@ class DiscountSerializer(serializers.ModelSerializer):
         read_only=True, slug_field='code')
 
     class Meta:
+        """Serializer meta class."""
         model = Discount
         fields = (
             'from_country_code',
