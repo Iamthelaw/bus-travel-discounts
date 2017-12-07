@@ -3,6 +3,7 @@
 
 import os
 import sys
+from datetime import date
 
 import django
 
@@ -18,7 +19,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Bus Travel'
-copyright = '2017, iamthelaw'
+copyright = f'{date.today().year}, iamthelaw'
 author = 'iamthelaw'
 
 # The version info
@@ -33,12 +34,19 @@ todo_include_todos = False
 # -- Options for HTML output ----------------------------------------------
 html_theme = 'alabaster'
 html_theme_options = {
-    'show_related': True,
+    'fixed_sidebar': True,
+    'logo_name': 'Bus Travel',
+    'github_user': 'iamthelaw',
+    'github_repo': 'bus-travel-discounts',
+    'description': (
+        'SPA app for travellers who wish to travel with '
+        'cheap prices by Europe in a bus.'
+    ),
 }
 html_static_path = ['_static']
 html_sidebars = {
     '**': [
-        'relations.html',
+        'about.html',
         'globaltoc.html',
         'searchbox.html',
     ]
