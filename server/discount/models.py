@@ -44,10 +44,12 @@ class Discount(models.Model):
 
     def price(self):
         """Formatted price as 10$."""
-        return f'{self.original_price} {self.original_currency.code}'
+        return '{price} {currency}'.format(
+            price=self.original_price, currency=self.original_currency)
 
     def __str__(self):
-        return f'{self.from_city.name} → {self.to_city.name}'
+        return '{from_city} → {to_city}'.format(
+            from_city=self.from_city.name, to_city=self.to_city.name)
 
     class Meta:
         ordering = ('from_city', 'to_city')

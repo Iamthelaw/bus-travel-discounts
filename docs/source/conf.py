@@ -19,7 +19,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Bus Travel'
-copyright = f'{date.today().year}, iamthelaw'
+copyright = '{year}, iamthelaw'.format(year=date.today().year)
 author = 'iamthelaw'
 
 # The version info
@@ -85,6 +85,3 @@ texinfo_documents = [
      author, 'BusTravel', 'SPA app for discount deals for travellers.',
      'Travel'),
 ]
-
-
-

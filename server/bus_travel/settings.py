@@ -10,7 +10,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'password123')
 
 #: Indicates if this project is running in developer mode
 DEBUG = os.environ.get('DEBUG', False)

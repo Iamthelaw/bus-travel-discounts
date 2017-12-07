@@ -55,9 +55,10 @@ class CityProxy(object):
             variant = Variant.objects.get(name=self.city_name)
         except Variant.DoesNotExist:
             logger.info(
-                f'Unable to find city "{self.city_name}", creating...'
+                'Unable to find city "%s", creating...',
+                self.city_name
             )
             return self.create()
         else:
-            logger.debug(f'Found existing city "{self.city_name}"')
+            logger.debug('Found existing city "%s"', self.city_name)
             return variant.city

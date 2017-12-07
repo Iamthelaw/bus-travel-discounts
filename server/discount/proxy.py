@@ -52,6 +52,6 @@ class DiscountProxy(object):
         """Get new or updated discount instance."""
         if not self.have_required_fields():
             raise ValueError(
-                f'Required fields: {", ".join(self.fields_for_filter)}'
+                'Required fields: ' + ", ".join(self.fields_for_filter)
             )
         return self.updated

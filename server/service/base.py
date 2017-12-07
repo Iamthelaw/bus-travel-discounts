@@ -36,7 +36,10 @@ class Service:
         else:
             logger.debug(api_response.content)
             raise ServiceUnavailable(
-                f'{self.name} service return <{api_response.status_code}>'
+                '{service_name} service return <{status}>'.format(
+                    service_name=self.name,
+                    status=api_response.status_code
+                )
             )
 
     @staticmethod
@@ -57,7 +60,10 @@ class Service:
             return response.data
         else:
             raise ServiceNotFound(
-                f'{self.name} service unable to find <{text}>'
+                '{service_name} service unable to find '
+                '<{search_query}>'.format(
+                    service_name=self.name, search_query=text
+                )
             )
 
 
