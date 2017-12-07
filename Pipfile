@@ -15,6 +15,7 @@ pylint-django = "*"
 ipython = "*"
 sphinx = "*"
 coveralls = "*"
+watchdog = "*"
 
 
 [packages]
