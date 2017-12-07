@@ -11,16 +11,10 @@ from geo_data.models import Variant
 
 
 API_ANSWER = {
-    'standard': {
-        'addresst': {},
-        'city': 'Riga',
-        'prov': 'LV',
-        'countryname': 'Latvia',
-        'postal': {},
-        'confidence': '0.60'
-    },
-    'longt': '24.13265',
-    'latt': '56.96143'
+    'name': 'Riga',
+    'country': 'Latvia',
+    'longitude': '24.13265',
+    'latitude': '56.96143'
 }
 
 
@@ -34,7 +28,7 @@ def city():
 
 
 @pytest.mark.django_db
-@mock.patch.object(CityProxy, '_api_call')
+@mock.patch.object(CityProxy, 'call_services')
 def test_new_city(mocked_api_call):
     """Testing creation of new city."""
     mocked_api_call.return_value = API_ANSWER
@@ -54,7 +48,7 @@ def test_new_city(mocked_api_call):
 
 
 @pytest.mark.django_db
-@mock.patch.object(CityProxy, '_api_call', side_effect=mock.Mock())
+@mock.patch.object(CityProxy, 'call_services', side_effect=mock.Mock())
 def test_existing_city(mocked_api_call, city):
     """Test that if city existed, it will not be created."""
     proxy = CityProxy('Riga')
