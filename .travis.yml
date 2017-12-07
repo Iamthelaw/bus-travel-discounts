@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6"
+
+before_install:
+  - pip install pipenv
+  - cp .env.default .env
+
+install:
+  - pipenv install --dev
+
+script:
+  - pipenv run py.test
+  - pipenv run coveralls

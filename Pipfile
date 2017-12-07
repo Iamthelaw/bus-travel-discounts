@@ -13,16 +13,18 @@ pytest-django = "*"
 pylint = "*"
 pylint-django = "*"
 ipython = "*"
-Sphinx = "*"
+sphinx = "*"
+coveralls = "*"
 
 
 [packages]
 
-Django = "*"
+django = "*"
 django-rest-framework = "*"
 djoser = "*"
 "beautifulsoup4" = "*"
 requests = "*"
+codacy-coverage = "*"
 
 
 [requires]
