@@ -1,4 +1,5 @@
 # Build static site for docs
+.PHONY: docs
 docs:
 	cd docs && make html
 

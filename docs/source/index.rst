@@ -19,6 +19,7 @@ Welcome to Bus Travel's documentation!
 
    apps/root
    apps/discount
+   apps/discount-tracker
    apps/geo_data
 
 
