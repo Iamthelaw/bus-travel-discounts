@@ -11,7 +11,13 @@ sys.path.insert(0, os.path.abspath('../../server'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bus_travel.settings'
 django.setup()
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.doctest',
+    'sphinx.ext.todo',
+]
+
 autodoc_member_order = 'bysource'
 templates_path = ['_templates']
 source_suffix = '.rst'
@@ -29,7 +35,7 @@ release = '1.0.0'
 language = None
 exclude_patterns = []
 pygments_style = 'sphinx'
-todo_include_todos = False
+todo_include_todos = True
 
 # -- Options for HTML output ----------------------------------------------
 html_theme = 'alabaster'

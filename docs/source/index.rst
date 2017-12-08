@@ -12,6 +12,7 @@ Welcome to Bus Travel's documentation!
 
    intro
    client
+   api
 
 .. toctree::
    :maxdepth: 2
@@ -20,9 +21,9 @@ Welcome to Bus Travel's documentation!
    apps/root
    apps/discount
    apps/discount-tracker
-   apps/geo_data
+   apps/geo-data
 
-
+.. todolist::
 
 Indices and tables
 ==================

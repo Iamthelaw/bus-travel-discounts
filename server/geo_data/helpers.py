@@ -1,8 +1,24 @@
-"""Some helper functions."""
+"""
+Helpers
+=======
+"""
 
 
 def sanitize(text):
-    """Sanitizes any text."""
+    """
+    Sanitizes any text.
+
+    Example usage
+
+    .. doctest::
+
+        >>> sanitize('Äêrtom')
+        Aertom
+
+    .. todo::
+
+        Pretty dumb function, I need to replace it ASAP!
+    """
     cleaned_text = text
     #: Parts of words
     garbage = ('The ', )

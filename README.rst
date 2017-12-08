@@ -1,13 +1,13 @@
 Bus Travel Discounts
 ********************
 
-Simple SPA app for travellers to keep track of nice deals on bus tickets
-in Europe region. It is a `Django <https://github.com/django/django>`_ app, parser and client written in
-`Mithril <https://github.com/MithrilJS/mithril.js>`_.
+    Simple SPA app for travellers to keep track of nice deals on bus tickets
+    in Europe region. It is a `Django <https://github.com/django/django>`_ app, parser and client written in
+    `Mithril <https://github.com/MithrilJS/mithril.js>`_.
 
-.. image:: https://badge.waffle.io/Iamthelaw/bus-travel-discounts.svg?columns=all
-    :target: https://waffle.io/Iamthelaw/bus-travel-discounts
-    :alt: 'Waffle.io - Columns and their card count'
+.. image:: https://readthedocs.org/projects/bus-travel-discounts/badge/?version=latest
+    :target: http://bus-travel-discounts.readthedocs.io/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://coveralls.io/repos/github/Iamthelaw/bus-travel-discounts/badge.svg?branch=dev
     :target: https://coveralls.io/github/Iamthelaw/bus-travel-discounts?branch=dev
@@ -20,6 +20,9 @@ in Europe region. It is a `Django <https://github.com/django/django>`_ app, pars
 .. image:: https://bettercodehub.com/edge/badge/Iamthelaw/bus-travel-discounts?branch=master
     :target: https://bettercodehub.com/results/Iamthelaw/bus-travel-discounts
     :alt: 'BetterCodeHub.com - Code health'
+
+**Documentation**
+    available on `readthedocs.io <http://bus-travel-discounts.readthedocs.io>`_
 
 .. inclusion-marker-do-not-remove
 
@@ -124,3 +127,27 @@ package.
     This command will watch for new changes in doc files and rebuild it,
     but be aware that watchmedo can only look for changes in already
     existing files, not new!
+
+Release History
+===============
+
+* 1.0
+    * Initial MWP release
+
+Meta
+====
+
+Anton Alekseev – @arobotehnik – hi@arobotehnik.me
+
+Distributed under the MIT license. See LICENSE for more information.
+
+https://github.com/iamthelaw/bus-travel-discounts
+
+Contributing
+============
+
+* Fork it (https://github.com/iamthelaw/bus-travel-discounts/fork)
+* Create your feature branch (git checkout -b feature/fooBar)
+* Commit your changes (git commit -am 'Add some fooBar')
+* Push to the branch (git push origin feature/fooBar)
+* Create a new Pull Request

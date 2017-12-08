@@ -1,9 +1,15 @@
-"""Models definitions for geo data app."""
+"""
+Data models
+===========
+"""
 from django.db import models
 
 
 class Country(models.Model):
-    """Country model."""
+    """
+    Data model for a country.
+    """
+    #: Country international name
     name = models.CharField(max_length=250, unique=True)
     #: International 2 characters code of country
     #: here used for drawing country flags on frontend
@@ -13,7 +19,12 @@ class Country(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        """I want to be sure that code is in upper case."""
+        """
+        Overdrived ``save`` method on a country model.
+
+        Before saving changes to database it ensures that country
+        international code is in upper case.
+        """
         self.code = self.code and self.code.upper()
         super().save(*args, **kwargs)
 
@@ -22,21 +33,33 @@ class Country(models.Model):
 
 
 class City(models.Model):
-    """City model."""
+    """Data model for a city."""
+    # TODO Maybe this field can be removed, I can take city name from
+    # main variant.
+    #: I'm not sure that this field is necessary here
     name = models.CharField(max_length=250, unique=True)
+    #: Link to country data model
     country = models.ForeignKey(
         Country, related_name='cities', on_delete=models.CASCADE)
+    #: Geografical latitude
     latitude = models.CharField(max_length=100, null=True, blank=True)
+    #: Geografical longitude
     longitude = models.CharField(max_length=100, null=True, blank=True)
 
+    # TODO I think this can be easily replaced with ``name``
     @property
     def pretty_name(self):
-        """Returns selected variant name."""
+        """
+        Returns city name.
+
+        If there is exists a main variant of city name it returns it.
+        Else if there is one or some count of city variants names it
+        returns first found city name variant.
+        """
         main_variant = self.variants.filter(is_main=True)
         if main_variant.exists():
             return main_variant.first().name
-        else:
-            return self.variants.first().name
+        return self.variants.first().name
 
     def __str__(self):
         return '{}, {}'.format(self.pretty_name, self.country)
@@ -47,12 +70,20 @@ class City(models.Model):
 
 
 class Variant(models.Model):
-    """Special model for different names of one city."""
+    """
+    Data model that holds relations between cities and cities name variants.
+
+    So the main idea of this is that city can have many names, and to be
+    able to define main, most appropriate variant of city name we need this
+    model.
+    """
+    #: Just a string representing a city
     name = models.CharField(max_length=250)
+    #: Link to an actual city data model
     city = models.ForeignKey(
         City, related_name='variants', on_delete=models.CASCADE)
 
-    #: Used to set city name to one of variants
+    #: Used to select this variant as main variant of the city name
     is_main = models.BooleanField(default=False)
 
     def __str__(self):
