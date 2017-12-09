@@ -28,13 +28,13 @@ images
 Templates
 =========
 
-Reallty only one template ``index.html`` - starting point
+Really only one template ``index.html`` - starting point
 for SPA application
 
 Management commands
 ===================
 
-This is usefull django scripts that can be run periodically.
+This is useful django scripts that can be run periodically.
 
 .. automodule:: bus_travel.management.commands.cleanup
     :members:

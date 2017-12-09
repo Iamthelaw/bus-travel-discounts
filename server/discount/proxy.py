@@ -40,7 +40,7 @@ class DiscountProxy(object):
 
     @property
     def updated(self):
-        """Updated instance of discount."""
+        """An updated instance of discount."""
         discount = self.instance
         for attr in self.fields_for_update:
             if self.kwargs.get(attr):

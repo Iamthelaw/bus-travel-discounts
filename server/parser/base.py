@@ -84,7 +84,7 @@ class BaseParser(ABC):
         """
         Process single offer.
 
-        It runs overrided methods ``_cleanup_destinations``,
+        It runs overridden methods ``_cleanup_destinations``,
         ``_cleanup_price`` and ``_cleanup_link``, and then, from
         collected data returns object similar to this:
 
@@ -138,7 +138,7 @@ class BaseParser(ABC):
 
             1. Create proxy from data that was returned from
                 ``.process_offfer`` method
-            2. Get discount instance from proxy class. Instance is updated
+            2. Get discount instance from proxy class. The instance is updated
                 with info that we pass to proxy class.
             3. Set discount instance as active and continue to next offer
         """

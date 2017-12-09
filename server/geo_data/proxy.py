@@ -2,8 +2,8 @@
 Proxy classes
 =============
 
-Main reason for city proxy class to exist is in desire to extract
-interaction between data model and external api service in proxy class.
+The main reason for city proxy class to exist is a desire to extract
+interaction between the data model and external api service in proxy class.
 """
 import logging
 
@@ -30,28 +30,29 @@ class CityProxy(object):
         proxy = CityProxy('Riga')
         city = proxy.get()
 
-    Explanation is needed. First - we created an instance of this proxy
-    class and passed a paramener ``city_name``. In our example it is ``Riga``.
+    An explanation is needed. First - we created an instance of this proxy
+    class and passed a parameter ``city_name``. In our example it is ``Riga``.
 
     Now we can call ``get`` method of this proxy class to get city
-    instance from database.
+    instance from the database.
 
-    Thae algoritm is like this:
+    The algorithm is like this:
 
-    1. The get method tries to find matching variant of provided city name
-        in database. If it succeded, it returns linked to variant model city
-        model. End of method run.
-    2. If get method fails to found matching variant in the database, it calls
+    1. The get method tries to find a matching variant of a provided city name
+        in the database. If it succeeded, it returns linked to variant model
+        city model. End of method run.
+    2. If get method fails to find a matching variant in the database, it calls
         a proxy method ``call_services``. That method is starting to send
         requests to external api server.
 
         1. If external api is found information about this city, it returns to
-            method ``get`` all necessary info, already formated and cleaned up
-            by service class. In that case ``get`` method creatates in database
+            method ``get`` all necessary info, already formatted and cleaned up
+            by service class. In that case ``get`` method creates in database
             new city record, new variant record and links them. Than returns
             city instance from database and end of ``get`` method.
-        2. If external api is failed to find information about desired city,
-            than we in trouble and severe letter is sended to administrator.
+        2. If external api is failed to find information about the desired
+            city, then we in trouble and a severe letter is sent
+            to the administrator.
 
     """
 

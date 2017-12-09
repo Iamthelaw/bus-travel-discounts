@@ -37,7 +37,7 @@ class CountryTracker(BaseTracker):
     """
     Tracker specific for country relations.
 
-    It different from city tracker in that it tracks country name and
+    It differs from city tracker in that it tracks country name and
     desired destination:
 
     * from this country

@@ -1,8 +1,9 @@
 Bus Travel Discounts
 ********************
 
-    Simple SPA app for travellers to keep track of nice deals on bus tickets
-    in Europe region. It is a `Django <https://github.com/django/django>`_ app, parser and client written in
+    Simple SPA app for travelers to keep track of nice deals on bus tickets
+    in Europe region. It is a `Django <https://github.com/django/django>`_
+    app, parser, and client written in
     `Mithril <https://github.com/MithrilJS/mithril.js>`_.
 
 .. image:: https://readthedocs.org/projects/bus-travel-discounts/badge/?version=latest
@@ -29,12 +30,13 @@ Bus Travel Discounts
 Installation
 ============
 
-I recommend yousing marvelous `pipenv <https://github.com/pypa/pipenv>`_
-package for development. The project is intentionally desined to work only on **python3** and last versions of libraries.
+I recommend using marvelous `pipenv <https://github.com/pypa/pipenv>`_
+package for development. The project is intentionally designed to work
+only on **python3** and last versions of libraries.
 
 Frontend libraries is installed via ``npm`` package manager.
 
-Recommended steps for installing and running project.
+Recommended steps for installing and running the project.
 
 .. code-block:: console
 
@@ -60,7 +62,7 @@ Development
 Set up development version
 --------------------------
 
-For development steps are slightly different.
+For development, steps are slightly different.
 
 .. code-block:: console
 
@@ -80,7 +82,7 @@ or
 Code health
 -----------
 
-Linting is provided by `pylint <https://github.com/PyCQA/pylint>`_
+Linting is provided by the `pylint <https://github.com/PyCQA/pylint>`_
 package. Configuration for this tool also can be found in ``setup.cfg``
 file in the root folder of this project.
 
@@ -91,8 +93,10 @@ file in the root folder of this project.
 Tests
 -----
 
-Tests are organized in **testing** directory andseparated by app. I prefer `pytest <https://github.com/pytest-dev/pytest>`_, the most pythonic test
-runner. Configuration for pytest framework can be found in ``setup.cfg``
+Tests are organized in **testing** directory and separated by an app.
+I prefer `pytest <https://github.com/pytest-dev/pytest>`_,
+the most pythonic test runner.
+Configuration for pytest framework can be found in ``setup.cfg``
 file in the root folder of this project.
 
 .. code-block:: console

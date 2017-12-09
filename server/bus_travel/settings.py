@@ -1,7 +1,7 @@
 """
 Settings
 ========
-Module contains settings for this projects.
+The module contains settings for this projects.
 
 I try to keep this module as simple and minimal as possible
 """

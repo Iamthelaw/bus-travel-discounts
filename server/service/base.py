@@ -2,11 +2,11 @@
 Base classes
 ============
 
-This module contains implementation of Service class and abstract Response
-class, that is crutial for design. The big idea behind this is that
-there is Service class, that do api calls, but most importanly there
+This module contains the implementation of Service class and abstract
+Response class, that is crucial for design. The big idea behind this is that
+there is Service class, that do api calls, but most importantly there
 is a Response class that given api response will format it in uniform
-maner.
+manner.
 """
 import time
 import logging
@@ -84,8 +84,8 @@ class Service:
         Get info about city with provided external api.
 
         First, it calls ``.name_variants`` to get possible variants.
-        Then in a cycle it ``.call_api`` with every variant to try
-        get detail information about desired city.
+        Then in a cycle, it ``.call_api`` with every variant try to
+        get detail information about the desired city.
 
         If no information can be found, it raises custom
         :class:`service.exceptions.ServiceNotFound` error.
@@ -108,8 +108,8 @@ class Response:
     """
     Abstract response class.
 
-    Defines ``parse`` and ``is_empty`` methods, that must be overriten in
-    inherited class.
+    Defines ``parse`` and ``is_empty`` methods, that must be overridden in
+    the inherited class.
 
     Example usage
 

@@ -26,7 +26,6 @@ Welcome to Bus Travel's documentation!
    apps/parser
    apps/service
 
-.. todolist::
 
 Indices and tables
 ==================

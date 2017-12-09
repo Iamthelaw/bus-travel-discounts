@@ -11,7 +11,7 @@ class Country(models.Model):
     """
     #: Country international name
     name = models.CharField(max_length=250, unique=True)
-    #: International 2 characters code of country
+    #: International 2 characters country code
     #: here used for drawing country flags on frontend
     code = models.CharField(max_length=2, null=True, blank=True)
 
@@ -20,9 +20,9 @@ class Country(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Overdrived ``save`` method on a country model.
+        Overwrite ``save`` method on a country model.
 
-        Before saving changes to database it ensures that country
+        Before saving changes to the database it ensures that country
         international code is in upper case.
         """
         self.code = self.code and self.code.upper()
@@ -41,9 +41,9 @@ class City(models.Model):
     #: Link to country data model
     country = models.ForeignKey(
         Country, related_name='cities', on_delete=models.CASCADE)
-    #: Geografical latitude
+    #: Geographical latitude
     latitude = models.CharField(max_length=100, null=True, blank=True)
-    #: Geografical longitude
+    #: Geographical longitude
     longitude = models.CharField(max_length=100, null=True, blank=True)
 
     # TODO I think this can be easily replaced with ``name``
@@ -52,7 +52,7 @@ class City(models.Model):
         """
         Returns city name.
 
-        If there is exists a main variant of city name it returns it.
+        If there is exists the main variant of city name it returns it.
         Else if there is one or some count of city variants names it
         returns first found city name variant.
         """
@@ -71,7 +71,7 @@ class City(models.Model):
 
 class Variant(models.Model):
     """
-    Data model that holds relations between cities and cities name variants.
+    A data model that holds relations between cities and cities name variants.
 
     So the main idea of this is that city can have many names, and to be
     able to define main, most appropriate variant of city name we need this
@@ -83,7 +83,7 @@ class Variant(models.Model):
     city = models.ForeignKey(
         City, related_name='variants', on_delete=models.CASCADE)
 
-    #: Used to select this variant as main variant of the city name
+    #: Used to select this variant as the main variant of the city name
     is_main = models.BooleanField(default=False)
 
     def __str__(self):

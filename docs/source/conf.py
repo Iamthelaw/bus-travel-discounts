@@ -15,7 +15,6 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.doctest',
-    'sphinx.ext.todo',
 ]
 
 autodoc_member_order = 'bysource'
@@ -45,7 +44,7 @@ html_theme_options = {
     'github_user': 'iamthelaw',
     'github_repo': 'bus-travel-discounts',
     'description': (
-        'SPA app for travellers who wish to travel with '
+        'SPA app for travelers who wish to travel with '
         'cheap prices by Europe in a bus.'
     ),
 }

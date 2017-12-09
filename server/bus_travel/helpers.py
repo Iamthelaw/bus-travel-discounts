@@ -14,7 +14,7 @@ from rest_framework.response import Response
 def instance_view(model_serializer):
     """
     Generic instance details view.
-    Basicly only GET responses with data if it is exists, if not - 404
+    Basically only GET responses to data if it exists, if not - 404
     error will be raised.
 
     :param model_serializer: Serializer class for model
