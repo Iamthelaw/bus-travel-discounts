@@ -1,4 +1,7 @@
-"""Ecolines parser."""
+"""
+Ecolines parser
+===============
+"""
 import json
 from decimal import Decimal
 
@@ -14,7 +17,21 @@ LOCALIZATION = 'localization'
 
 
 class EcolinesParser(BaseParser):
-    """Ecolines parser class."""
+    """
+    Ecolines parser class.
+
+    Example usage:
+
+    .. code-block:: python
+
+        parser = EcolinesParser(
+            offers={'class_': 'offer'},
+            destinations={'class_': 'offer-title'},
+            price={'name': 'span', 'class_': 'label'},
+            link={'class_': 'offer-link'},
+        )
+        parser.run()
+    """
 
     def _link_to_deals_page(self, url):
         """Local method for extracting link to special deals page."""

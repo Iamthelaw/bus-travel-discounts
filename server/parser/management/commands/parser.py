@@ -1,11 +1,25 @@
-"""Management command for parser."""
+"""
+Parser
+------
+
+.. note::
+
+    I should probably change this name because ``django-admin parser``
+    is no cool anymore :)
+"""
 from parser.ecolines import EcolinesParser
 
 from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    """Command to start parser."""
+    """
+    Command to start parser.
+
+    .. code-block:: console
+
+        django-admin parser
+    """
     help = 'Parse and store info in database'
 
     def handle(self, *args, **options):

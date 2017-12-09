@@ -1,4 +1,9 @@
-"""Base class for creating parsers."""
+"""
+Abstract base class
+===================
+
+Mother of all parsers, that *can* be made in future.
+"""
 import time
 import logging
 from abc import ABC, abstractmethod
@@ -13,7 +18,37 @@ logger = logging.getLogger(__name__)
 
 
 class BaseParser(ABC):
-    """Abstract base class for parsers."""
+    """
+    Abstract base class.
+
+    Usage example
+
+    .. code-block:: python
+
+        class MyParser(BaseParser):
+
+            def _urls(self):
+                # Should return all urls for parsing
+                return [
+                    'http://example.com/ru/ru,
+                    'http://example.com/en/us'
+                ]
+
+            def _cleanup_destinations(tag):
+                # self.destinations is element selector
+                # like 'span.offer-destinations'
+                # Any cleanup processing is going here
+                return tag.find(self.destinations)
+
+            def _cleanup_price(tag):
+                # Again any processing, cleanup, extraction
+                # of price and currency from tag goes here
+                return tag.find(self.price)
+
+            def _cleanup_link(tag):
+                return tag.find(self.link).attr('href')
+
+    """
     def __init__(self, **kwargs):
         """Defining selectors."""
         self.offers = kwargs.get('offers')
@@ -38,6 +73,7 @@ class BaseParser(ABC):
         """Extract price and currency."""
         pass
 
+    # TODO I should make this method overriding optional
     @staticmethod
     @abstractmethod
     def _cleanup_link(tag):
@@ -45,7 +81,25 @@ class BaseParser(ABC):
         pass
 
     def process_offer(self, offer):
-        """Process single offer."""
+        """
+        Process single offer.
+
+        It runs overrided methods ``_cleanup_destinations``,
+        ``_cleanup_price`` and ``_cleanup_link``, and then, from
+        collected data returns object similar to this:
+
+        .. code-block:: python
+
+            {
+                'from_city': 'Riga',
+                'to_city': 'Moscow',
+                'original_price': '5.14',
+                'original_currency': 'EUR',
+                'link': 'http://example.com/en/us/special-offer',
+                'parser': 'MyParser'
+            }
+
+        """
         from_, to_ = self._cleanup_destinations(
             offer.find(**self.destinations))
         price, curr = self._cleanup_price(
@@ -60,6 +114,7 @@ class BaseParser(ABC):
             'parser': self.__class__.__name__
         }
 
+    # TODO Do I really need this method?
     @staticmethod
     def soup(url):
         """Get a nice, tasty html soup."""
@@ -67,7 +122,27 @@ class BaseParser(ABC):
         return BeautifulSoup(response.content, 'html.parser')
 
     def run(self):
-        """It runs it all."""
+        """
+        Starts parsing process.
+
+        First, it sets all discounts that are currently in database
+        to state `is_active=False`
+
+        Next, it collects urls for parsing from ``._urls()`` method
+
+        Then starts parsing cycle. For every url:
+
+        1. Create soup from raw html
+        2. Get offers tags via ``self.offers`` selector
+        3. Pass every process tag to ``.process_offer`` method
+
+            1. Create proxy from data that was returned from
+                ``.process_offfer`` method
+            2. Get discount instance from proxy class. Instance is updated
+                with info that we pass to proxy class.
+            3. Set discount instance as active and continue to next offer
+        """
+        # Resets state of all discounts in database
         Discount.objects.all().update(is_active=False)
         urls = self._urls()
         for url in urls:
@@ -79,5 +154,6 @@ class BaseParser(ABC):
                 discount = proxy.get()
                 discount.is_active = True
                 discount.save()
+            # TODO I should probably move this to project settings
             # We don't want to be rude
             time.sleep(5)

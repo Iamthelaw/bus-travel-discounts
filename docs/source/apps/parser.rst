@@ -1,0 +1,2 @@
+.. automodule:: parser
+    :members:
