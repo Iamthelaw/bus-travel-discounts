@@ -24,6 +24,7 @@ Welcome to Bus Travel's documentation!
    apps/geo-data
    apps/money
    apps/parser
+   apps/service
 
 .. todolist::
 

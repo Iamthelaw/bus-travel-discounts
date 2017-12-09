@@ -1,4 +1,13 @@
-"""Abstract classes for service package."""
+"""
+Base classes
+============
+
+This module contains implementation of Service class and abstract Response
+class, that is crutial for design. The big idea behind this is that
+there is Service class, that do api calls, but most importanly there
+is a Response class that given api response will format it in uniform
+maner.
+"""
 import time
 import logging
 from collections import namedtuple
@@ -13,8 +22,19 @@ Coordinates = namedtuple('Coordinates', 'latitude,longitude')
 
 
 class Service:
-    """Abstract class for external api service."""
+    """
+    External api service.
 
+    Example usage
+
+    .. code-block:: python
+
+        service = Service({'url': 'http://fake-api.com'}, Response)
+        # And when you need it, call find
+        city_data = service.find('Riga')
+    """
+
+    # TODO I should change it to more readable format ASAP
     def __init__(self, settings, response_cls):
         self.url = settings['url']
         self.key = settings['key']
@@ -26,7 +46,9 @@ class Service:
         self.response_cls = response_cls
 
     def call_api(self, text):
-        """Calls external api service."""
+        """
+        Gently calls external api.
+        """
         time.sleep(getattr(self, 'timeout', 1))
         payload = {self.query_keyword: text, self.api_keyword: self.key}
         payload.update(self.extra_params)
@@ -44,7 +66,13 @@ class Service:
 
     @staticmethod
     def name_variants(name):
-        """Returns variants of city name."""
+        """
+        Generates variants of the text.
+
+        >>> self.name_variants('Rīgai')
+        ('Rīgai', 'Rīga', 'Rigai')
+
+        """
         return (
             name,
             name[:-1],
@@ -52,7 +80,16 @@ class Service:
         )
 
     def find(self, text):
-        """Main method for getting info."""
+        """
+        Get info about city with provided external api.
+
+        First, it calls ``.name_variants`` to get possible variants.
+        Then in a cycle it ``.call_api`` with every variant to try
+        get detail information about desired city.
+
+        If no information can be found, it raises custom
+        :class:`service.exceptions.ServiceNotFound` error.
+        """
         for variant in self.name_variants(text):
             response = self.call_api(variant)
             if response.is_empty:
@@ -68,7 +105,31 @@ class Service:
 
 
 class Response:
-    """Abstract external api response class."""
+    """
+    Abstract response class.
+
+    Defines ``parse`` and ``is_empty`` methods, that must be overriten in
+    inherited class.
+
+    Example usage
+
+    .. code-block:: python
+
+        class MyServiceResponse(Response):
+            @staticmethod
+            def parse(data):
+                # Any formatting, cleaning up goes here
+                return data
+
+            @property
+            def is_empty(self):
+                # Api services often returns special fields with error
+                # codes or messages. This example implementation
+                # is checked if errors field contains anything.
+                if self.raw_data.get('errors'):
+                    return False
+                return True
+    """
 
     def __init__(self, raw_data):
         self.raw_data = raw_data
@@ -85,5 +146,5 @@ class Response:
 
     @property
     def is_empty(self):
-        """Returns is this response is empty."""
+        """Returns if this response is empty."""
         raise NotImplementedError
