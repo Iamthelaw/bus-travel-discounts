@@ -22,6 +22,7 @@ Welcome to Bus Travel's documentation!
    apps/discount
    apps/discount-tracker
    apps/geo-data
+   apps/money
 
 .. todolist::
 
