@@ -45,15 +45,13 @@ class SimpleCitySerializer(serializers.ModelSerializer):
 
         {
             "name": "Riga",
-            "country": {
-                "name": "Latvia",
-                "code": "LV"
-            },
+            "country": "Latvia",
             "latitude": "0.123123",
             "longitude": "1.123123"
         }
     """
-    country = SimpleCountrySerializer()
+    country = serializers.SlugRelatedField(
+        read_only=True, slug_field='name')
 
     class Meta:
         """Serializer meta class."""

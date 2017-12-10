@@ -59,7 +59,10 @@ class City(models.Model):
         main_variant = self.variants.filter(is_main=True)
         if main_variant.exists():
             return main_variant.first().name
-        return self.variants.first().name
+        try:
+            return self.variants.first().name
+        except AttributeError:
+            return self.name
 
     def __str__(self):
         return '{}, {}'.format(self.pretty_name, self.country)

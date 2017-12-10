@@ -17,4 +17,7 @@ api calls.
 
 .. automodule:: geo_data.serializers
     :members:
+
+.. automodule:: geo_data.views
+    :members:
 """
