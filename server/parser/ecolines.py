@@ -3,83 +3,79 @@ Ecolines parser
 ===============
 """
 import json
-from decimal import Decimal
 
-from parser.base import BaseParser
+from parser.base import Parser
 
-from geo_data.proxy import CityProxy
-from money.models import Currency
-
-DOMAIN = 'http://ecolines.net'
-SEPARATOR_SYMBOL = '→'
-LANGUAGE = 'ecolines_language'
-LOCALIZATION = 'localization'
+from .exceptions import ParserError
+from .offer import Offer
 
 
-class EcolinesParser(BaseParser):
+class LocalUrlParser(Parser):
     """
-    Ecolines parser class.
+    Collect location specific urls from international site.
 
-    Example usage:
-
-    .. code-block:: python
-
-        parser = EcolinesParser(
-            offers={'class_': 'offer'},
-            destinations={'class_': 'offer-title'},
-            price={'name': 'span', 'class_': 'label'},
-            link={'class_': 'offer-link'},
-        )
-        parser.run()
+    >>> localized_links = LocalUrlParser()()
     """
 
-    def _link_to_deals_page(self, url):
-        """Local method for extracting link to special deals page."""
-        soup = self.soup(url)
-        link = tuple(soup.find(id='main-navbar').find_all('li'))[1]
-        return DOMAIN + link.find('a').get('href')
+    domain = 'http://ecolines.net'
+    language = 'ecolines_language'
+    localization = 'localization'
 
-    def _urls(self):
-        """Dirty method, needs a lot of love and refactoring."""
-        template = DOMAIN + '/{}/{}'
-
-        soup = self.soup(DOMAIN)
-        scripts = (_.get_text() for _ in soup.find_all('script'))
-        inlined_javascript = tuple(_ for _ in scripts if LANGUAGE in _)[-1]
+    @property
+    def locales(self):
+        """Extracts locales from javascript part of the page."""
+        scripts = (_.get_text() for _ in self.soup.find_all('script'))
+        inlined_javascript = tuple(
+            _ for _ in scripts if self.language in _
+        )[-1]
         if not inlined_javascript:
-            print('no listing found')
+            ParserError('Failed to find links to discounts!')
         inlined_javascript = json.loads(
             inlined_javascript
             .replace('jQuery.extend(Drupal.settings, ', '')
             .replace(');', '')
         )
-        localization = inlined_javascript[LANGUAGE][LOCALIZATION]
-        for region, data in json.loads(localization).items():
+        return inlined_javascript[self.language][self.localization]
+
+    def __call__(self):
+        self.harvest(self.domain)
+        for region, data in json.loads(self.locales).items():
             languages = data['lng']
             for lang in languages:
-                yield self._link_to_deals_page(template.format(region, lang))
+                self.collected_data.add('/'.join((self.domain, region, lang)))
 
-    @staticmethod
-    def _cleanup_destinations(tag):
-        destinations = tag.get_text().split(SEPARATOR_SYMBOL)
-        if len(destinations) == 1:
-            destinations = destinations[0].split('-')[:2]
-        from_, to_ = tuple(_.strip() for _ in destinations)[:2]
-        return CityProxy(from_).get(), CityProxy(to_).get()
 
-    @staticmethod
-    def _cleanup_price(tag):
-        data = tag.get_text().split()
-        price, currency = data[:-1], data[-1]
-        price = ''.join(price).replace(',', '.').replace(' ', '')
-        try:
-            price = Decimal(price)
-        except (ValueError, AttributeError):
-            price = 0
-        currency, _ = Currency.objects.get_or_create(
-            code=currency.upper()[:3])
-        return price, currency
+class OfferPageParser(Parser):
+    """
+    Collects data from offers page.
 
-    @staticmethod
-    def _cleanup_link(tag):
-        return tag.get('href')
+    >>> OfferPageParser('http://some-url.com')()
+    """
+
+    url = None
+
+    @property
+    def link_to_discounts(self):
+        """Returns link to discounts page from site menu."""
+        self.harvest(self.url)
+        _, menu_item, *_ = tuple(
+            self.soup.find(id='main-navbar').find_all('li')
+        )
+        return self.url + menu_item.find('a').get('href')
+
+    def collect(self):
+        """Store collected data in class attribute."""
+        self.harvest(self.link_to_discounts)
+        for tag in self.soup.find_all(class_='offer'):
+            offer = Offer(use_timeout=self.use_timeout)
+            offer.destinations = tag.find(
+                class_='offer-title').get_text()
+            offer.price_tag = tag.find(
+                name='span', class_='label').get_text()
+            offer.link_tag = tag.find(class_='offer-link').get('href')
+            self.collected_data.add(offer)
+
+    def __call__(self):
+        self.collect()
+        for offer in self.collected_data:
+            offer.save()

@@ -1,15 +1,11 @@
 """
-Parser
-------
-
-.. note::
-
-    I should probably change this name because ``django-admin parser``
-    is no cool anymore :)
+Parser command
+--------------
 """
-from parser.ecolines import EcolinesParser
-
 from django.core.management.base import BaseCommand
+
+from parser.ecolines import LocalUrlParser
+from parser.ecolines import OfferPageParser
 
 
 class Command(BaseCommand):
@@ -22,11 +18,12 @@ class Command(BaseCommand):
     """
     help = 'Parse and store info in database'
 
+    def __init__(self, use_timeout, *args, **kwargs):
+        self.parser = OfferPageParser(use_timeout=use_timeout)
+        self.localized_links = LocalUrlParser(use_timeout=use_timeout)()
+        super().__init__(*args, **kwargs)
+
     def handle(self, *args, **options):
-        parser = EcolinesParser(
-            offers={'class_': 'offer'},
-            destinations={'class_': 'offer-title'},
-            price={'name': 'span', 'class_': 'label'},
-            link={'class_': 'offer-link'},
-        )
-        parser.run()
+        for link in self.localized_links:
+            self.parser.url = link
+            self.parser()

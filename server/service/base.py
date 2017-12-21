@@ -14,6 +14,8 @@ from collections import namedtuple
 
 import requests
 
+from django.conf import settings
+
 from service.exceptions import ServiceNotFound
 from service.exceptions import ServiceUnavailable
 
@@ -29,37 +31,29 @@ class Service:
 
     .. code-block:: python
 
-        service = Service({'url': 'http://fake-api.com'}, Response)
+        service = Service(http://fake-api.com', Response)
         # And when you need it, call find
         city_data = service.find('Riga')
     """
 
-    # TODO I should change it to more readable format ASAP
-    def __init__(self, settings, response_cls):
-        self.url = settings['url']
-        self.key = settings['key']
-        self.name = settings['name']
-        self.timeout = settings['timeout']
-        self.query_keyword = settings['query_keyword']
-        self.api_keyword = settings['api_keyword']
-        self.extra_params = settings['extra']
+    def __init__(self, url, response_cls, use_timeout=True):
+        self.url = url
         self.response_cls = response_cls
+        self.use_timeout = use_timeout
 
     def call_api(self, text):
         """
         Gently calls external api.
         """
-        time.sleep(getattr(self, 'timeout', 1))
-        payload = {self.query_keyword: text, self.api_keyword: self.key}
-        payload.update(self.extra_params)
-        api_response = requests.get(self.url, params=payload)
+        if self.use_timeout:
+            time.sleep(settings.REQUESTS_TIMEOUT)
+        api_response = requests.get(self.url.format(query=text))
         if api_response.status_code == 200:
             return self.response_cls(api_response.json())
         else:
             logger.debug(api_response.content)
             raise ServiceUnavailable(
-                '{service_name} service return <{status}>'.format(
-                    service_name=self.name,
+                'API service return <{status}>'.format(
                     status=api_response.status_code
                 )
             )
@@ -95,13 +89,10 @@ class Service:
             if response.is_empty:
                 continue
             return response.data
-        else:
-            raise ServiceNotFound(
-                '{service_name} service unable to find '
-                '<{search_query}>'.format(
-                    service_name=self.name, search_query=text
-                )
-            )
+        raise ServiceNotFound(
+            'Service unable to find <{search_query}>'.format(
+                search_query=text)
+        )
 
 
 class Response:

@@ -16,6 +16,8 @@ ipython = "*"
 sphinx = "*"
 coveralls = "*"
 watchdog = "*"
+responses = "*"
+mimesis = "*"
 
 
 [packages]

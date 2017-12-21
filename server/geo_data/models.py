@@ -25,7 +25,7 @@ class Country(models.Model):
         Before saving changes to the database it ensures that country
         international code is in upper case.
         """
-        self.code = self.code and self.code.upper()
+        self.code = self.code and self.code.upper()[:2]
         super().save(*args, **kwargs)
 
     class Meta:

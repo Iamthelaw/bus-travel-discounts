@@ -5,7 +5,6 @@ The module contains settings for this projects.
 
 I try to keep this module as simple and minimal as possible
 """
-
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'password123')
 #: Indicates if this project is running in developer mode
 DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.environ.get('HOST')]
 
 CSRF_USE_SESSIONS = True
 
@@ -160,34 +159,16 @@ LOGGING = {
     },
 }
 
-#: Custom setting object for storing access to Mapzen api serivce.
-#: Mainly I use this api service as fallback alternative to Opencage
-#: service, so when Opencage fails I can try get info from this guy.
-# TODO: Need to cleanup this part, to not duplicate yourself
-MAPZEN_API = {
-    'name': 'Mapzen',
-    'url': 'https://search.mapzen.com/v1/search/structured',
-    'key': os.environ.get('MAPZEN_API_KEY'),
-    'timeout': .5,
-    'query_keyword': 'locality',
-    'api_keyword': 'api_key',
-    'extra': {},
-}
 #: Custom setting object for storing access to Opencage api serivce.
 #: Important part here is ``extra`` object containing geo bounds
 #: that allow forward geo seraching be more fast and specific
-OPENCAGE_API = {
-    'name': 'OpenCage',
-    'url': 'https://api.opencagedata.com/geocode/v1/json',
-    'key': os.environ.get('OPENCAGE_API_KEY'),
-    'timeout': 1,
-    'query_keyword': 'q',
-    'api_keyword': 'key',
-    'extra': {
-        # We need only basic info
-        'no_annotations': 1,
-        'limit': 1,
-        # Searching only Europe
-        'bounds': '-10.546875,36.4919734706,42.1875,71.2302205238',
-    }
-}
+OPENCAGE_API_URL = (
+    'https://api.opencagedata.com/geocode/v1/json?q={query}&' +
+    'key={key}&bounds={bounds}&limit=1&no_annotations=1'.format(
+        key=os.environ.get('OPENCAGE_API_KEY'),
+        bounds='-10.546875,36.4919734706,42.1875,71.2302205238'
+    )
+)
+
+#: Project global timeout setting for all external requests
+REQUESTS_TIMEOUT = 3

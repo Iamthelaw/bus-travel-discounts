@@ -7,13 +7,16 @@ interaction between the data model and external api service in proxy class.
 """
 import logging
 
+from django.conf import settings
+
 from geo_data.models import City
 from geo_data.models import Country
 from geo_data.models import Variant
-from geo_data.helpers import sanitize
 
-from service.geo import MapzenService
-from service.geo import OpenCageService
+from bus_travel.helpers import serialize
+
+from service.base import Service
+from service.response import OpenCageResponse
 from service.exceptions import ServiceNotFound, ServiceUnavailable
 
 logger = logging.getLogger(__name__)
@@ -56,19 +59,17 @@ class CityProxy(object):
 
     """
 
-    def __init__(self, city_name):
-        self.city_name = sanitize(city_name)
-        self.opencage = OpenCageService
-        self.mapzen = MapzenService
+    def __init__(self, city_name, use_timeout=True):
+        self.city_name = serialize(city_name)
+        self.opencage = Service(
+            settings.OPENCAGE_API_URL,
+            OpenCageResponse,
+            use_timeout=use_timeout)
 
     def call_services(self):
         """Calling external api services."""
         try:
             return self.opencage.find(self.city_name)
-        except (ServiceNotFound, ServiceUnavailable) as exc:
-            logger.exception(str(exc), exc_info=0)
-        try:
-            return self.mapzen.find(self.city_name)
         except (ServiceNotFound, ServiceUnavailable) as exc:
             logger.exception(str(exc), exc_info=0)
         raise ValueError(

@@ -1,33 +1,12 @@
 """External api response class."""
 import logging
 
-from geo_data.helpers import sanitize
+from bus_travel.helpers import serialize
 
 from service.base import Response
 from service.base import Coordinates
 
 logger = logging.getLogger(__name__)
-
-
-class MapzenResponse(Response):
-    """Mapzen special response type."""
-
-    @staticmethod
-    def parse(data):
-        """Parse input data to desired format."""
-        data = data['features']
-        coord = Coordinates(*data[0]['geometry']['coordinates'])
-        return {
-            'name': data[0]['properties']['name'],
-            'country': data[0]['properties']['country'],
-            'latitude': coord.latitude,
-            'longitude': coord.longitude,
-        }
-
-    @property
-    def is_empty(self):
-        """This response is empty?"""
-        return len(self.raw_data['features']) == 0
 
 
 class OpenCageResponse(Response):
@@ -40,12 +19,12 @@ class OpenCageResponse(Response):
         coord = Coordinates(data['geometry']['lat'], data['geometry']['lng'])
         try:
             return {
-                'name': sanitize(
-                    data['components'].get('city')
-                    or data['components'].get('county')
-                    or data['components']['state']
+                'name': serialize(
+                    data['components'].get('city') or
+                    data['components'].get('county') or
+                    data['components']['state']
                 ),
-                'country': sanitize(data['components']['country']),
+                'country': serialize(data['components']['country']),
                 'latitude': coord.latitude,
                 'longitude': coord.longitude,
             }

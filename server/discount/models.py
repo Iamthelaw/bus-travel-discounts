@@ -18,7 +18,7 @@ class Discount(models.Model):
     original_price = models.DecimalField(
         default=0.00, decimal_places=2, max_digits=8)
     original_currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE)
+        Currency, on_delete=models.CASCADE, null=True, blank=True)
 
     time_start = models.DateField(null=True, blank=True)
     time_end = models.DateField(null=True, blank=True)

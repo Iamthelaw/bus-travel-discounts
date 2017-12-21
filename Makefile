@@ -17,10 +17,13 @@ lint:
 test:
 	pytest
 
+.PHONY: tdd
+tdd:
+	watchmedo shell-command --patterns="*.py" --recursive --command="pytest"
+
 .PHONY: run
 run:
 	pipenv run django-admin runserver
-
 
 install:
 	npm i --production
