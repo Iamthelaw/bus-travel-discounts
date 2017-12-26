@@ -1,9 +1,9 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src/spa_app/src/main.js',
+  entry: './client/main.js',
   output: {
-    path: path.resolve(__dirname, './src/spa_app/static/spa_app'),
+    path: path.resolve(__dirname, './server/bus_travel/static'),
     filename: 'app.js'
   },
   module: {

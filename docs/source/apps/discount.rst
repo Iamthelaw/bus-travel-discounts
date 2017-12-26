@@ -1,0 +1,2 @@
+.. automodule:: discount
+    :members:

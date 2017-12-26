@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Bus Travel Discounts</title>
+    <meta charset='UTF-8'/>
+    <!-- Twitter Meta -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@my_Frankenstein" />
+    <!-- Open Graph Meta
+    Debug open graph meta-tags: https://developers.facebook.com/tools/debug/
+    Content types: https://developers.facebook.com/docs/reference/opengraph#object-type -->
+    <meta property="og:url" content="https://google.com" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Bus Travel Discounts" />
+    <meta property="og:description" content="Best app for searching cheap bus tickets" />
+    <meta property="og:image" content="http://imag.es/autumn.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+</head>
+
+<body>
+  {% csrf_token %}
+  <app></app>
+  <script src="{% static 'app.js' %}"></script>
+</body>
+</html>

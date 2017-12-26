@@ -1,10 +1,12 @@
 {
   "name": "bus-travel-discounts",
   "version": "1.0.0",
-  "description": "Bus discounts site frontend",
-  "main": "src/spa_app/src/main.js",
+  "description": "Bus travel discounts frontend",
+  "main": "./client/main.js",
   "dependencies": {
     "bulma": "^0.6.0",
+    "flag-icon-css": "^2.8.0",
+    "js-cookie": "^2.1.4",
     "mithril": "^1.1.5"
   },
   "devDependencies": {
@@ -18,9 +20,10 @@
   },
   "scripts": {
     "start": "webpack -d --progress --colors --watch",
-    "build": "webpack -p --progress --colors",
-    "styles": "sass src/spa_app/src/style.sass src/spa_app/static/spa_app/style.css",
-    "format": "standard --fix ./src/spa_app/src/**/*.js"
+    "build": "npm run styles && npm run js",
+    "js": "webpack -p --progress --colors",
+    "styles": "sass ./client/style.sass ./server/bus_travel/static/style.css",
+    "format": "standard --fix ./client/**/*.js"
   },
   "babel": {
     "presets": [
