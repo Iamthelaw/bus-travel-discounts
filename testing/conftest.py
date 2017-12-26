@@ -1,6 +1,7 @@
 import pytest
 import mimesis
 
+from money.models import Currency
 from geo_data.models import City, Country
 
 
@@ -75,13 +76,33 @@ def city(city_name, country_name, country_code):
     return City.objects.create(name=city_name, country=country)
 
 
+def unique_country():
+    """Returns obly unique countries instances."""
+    country_name = mimesis.Address().country()
+    if Country.objects.filter(name=country_name).exists():
+        return unique_country()
+    return Country.objects.create(name=country_name)
+
+
+def unique_city(country):
+    city_name = mimesis.Address().city()
+    if City.objects.filter(name=city_name).exists():
+        return unique_city(country)
+    return City.objects.create(name=city_name, country=country)
+
+
 @pytest.fixture
-def cities(country_name, country_code):
+def cities(count=10):
     """Returns queryset of cities in one country."""
-    country = Country.objects.create(name=country_name, code=country_code)
-    for _ in range(10):
-        City.objects.create(name=mimesis.Address.city(), country=country)
-    return City.objects.all()
+    return (
+        unique_city(unique_country())
+        for _ in range(count)
+    )
+
+
+@pytest.fixture
+def currency(currency_code):
+    return Currency.objects.create(code=currency_code)
 
 
 @pytest.fixture

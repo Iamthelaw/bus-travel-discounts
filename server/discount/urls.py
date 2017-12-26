@@ -5,6 +5,5 @@ from discount import views
 
 
 urlpatterns = [
-    path('discount/top/', views.top),
-    path('discount/by-country/', views.by_country),
+    path('discount/top/', views.top, name='discount-list'),
 ]

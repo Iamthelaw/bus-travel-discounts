@@ -17,6 +17,12 @@ def test_city_detail(client, city):
 
 
 @pytest.mark.django_db
+def test_city_list(client):
+    res = client.get(reverse('city-list'))
+    assert res.status_code == 200
+
+
+@pytest.mark.django_db
 def test_country_retrieve(client, city):
     res = client.get(reverse('country-detail', args=[city.country.name]))
     assert res.status_code == 200
@@ -25,4 +31,10 @@ def test_country_retrieve(client, city):
 @pytest.mark.django_db
 def test_country_detail(client, city):
     res = client.get(reverse('country-detail-full', args=[city.country.name]))
+    assert res.status_code == 200
+
+
+@pytest.mark.django_db
+def test_country_list(client):
+    res = client.get(reverse('country-list'))
     assert res.status_code == 200

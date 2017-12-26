@@ -124,8 +124,3 @@ class FullCountrySerializer(SimpleCountrySerializer):
     def get_cities(country):
         """Returns all cities discounts for country."""
         return FullCitySerializer(country.cities.all(), many=True).data
-
-    class Meta:
-        """Serializer meta class."""
-        model = Country
-        fields = ('name', 'code', 'cities')

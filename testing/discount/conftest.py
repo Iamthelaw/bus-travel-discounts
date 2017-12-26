@@ -1,22 +1,8 @@
+from itertools import combinations
+
 import pytest
 
-from geo_data.models import City
-from geo_data.models import Country
-
-
-@pytest.fixture
-def city():
-    """Returns City instance."""
-    country = Country.objects.create(name='Latvia')
-    city = City.objects.create(name='Riga', country=country)
-    Variant.objects.create(name='Riga', city=city)
-    return city
-
-
-@pytest.fixture
-def currency():
-    """Returns currency instance."""
-    return Currency.objects.create(code='USD', symbol='$')
+from discount.models import Discount
 
 
 @pytest.fixture
@@ -30,3 +16,29 @@ def kwargs(city, currency):
         'link': 'http://google.com',
         'parser': 'AnyParser'
     }
+
+
+@pytest.fixture
+def discount(price, page_url, city, currency):
+    """Returns discount instance."""
+    return Discount.objects.create(
+        from_city=city,
+        to_city=city,
+        original_price=price,
+        original_currency=currency,
+        link=page_url,
+    )
+
+
+@pytest.fixture
+def discounts(cities, price, page_url, currency):
+    """Returns 10 Discount instances."""
+    city_pairs = tuple(combinations(cities, 2))[:10]
+    for from_city, to_city in city_pairs:
+        Discount.objects.create(
+            from_city=from_city,
+            to_city=to_city,
+            original_price=price,
+            original_currency=currency,
+            link=page_url
+        )

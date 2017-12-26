@@ -40,15 +40,22 @@ class BaseGeoViewSet(ViewSet):
     #: By default, this set to 'pk'
     lookup_field = 'name'
 
-    def retrieve(self, request, name=None):
+    def retrieve(self, *_, name=None):
+        """Returns compact detail view."""
         instance = get_object_or_404(self.queryset.model, name=name)
         serializer = self.retrieve_serializer(instance)
         return Response(serializer.data)
 
     @detail_route(methods=['get'], url_name='detail-full')
-    def detail(self, request, name=None):
+    def detail(self, *_, name=None):
+        """Returns full blown detail view."""
         instance = get_object_or_404(self.queryset.model, name=name)
         serializer = self.detail_serializer(instance)
+        return Response(serializer.data)
+
+    def list(self, *_):
+        """Returns simple list of many instances."""
+        serializer = self.retrieve_serializer(self.queryset, many=True)
         return Response(serializer.data)
 
 
