@@ -4,7 +4,7 @@
   "description": "Bus discounts site frontend",
   "main": "src/spa_app/src/main.js",
   "dependencies": {
-    "bulma": "^0.6.0",
+    "bulma": "^0.7.0",
     "mithril": "^1.1.5"
   },
   "devDependencies": {
